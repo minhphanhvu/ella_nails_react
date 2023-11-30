@@ -46,7 +46,7 @@ const NavigationComponent = () => {
           <CustomLink to="/">Home</CustomLink>
           <CustomLink to="/about">About</CustomLink>
         </NAV>
-        <BOOKING />
+        <BOOKING>Booking</BOOKING>
       </WRAPPER>
     </>
   );

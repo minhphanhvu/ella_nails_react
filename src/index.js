@@ -9,6 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      {console.log("rerender the index.js")}
       <App />
     </BrowserRouter>
   </React.StrictMode>

@@ -1,0 +1,12 @@
+.nav_container {
+  transform: translateY(-100%);
+}
+
+.menu_active {
+  opacity: 1;
+  transform: translate(0%, 0%);
+}
+
+.nav-close {
+  margin-top: 30px;
+}

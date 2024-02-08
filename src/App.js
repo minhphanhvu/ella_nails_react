@@ -3,6 +3,7 @@ import { NavigationComponent } from "components/NavigationComponent";
 import Home from "components/Home";
 import About from "components/About";
 import { Route, Routes } from "react-router-dom";
+import { BookingComponent } from "components/Book";
 
 function App() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -29,6 +30,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="book" element={<BookingComponent />} />
       </Routes>
     </div>
   );

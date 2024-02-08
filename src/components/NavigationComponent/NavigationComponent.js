@@ -113,9 +113,61 @@ const LI = styled(Link)`
   }
 `;
 
-const BookLi = styled(Link)`
-  color: rgba(255, 255, 255, 1);
+const BOOKING_LI = styled(Link)`
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 1);
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 10% 30%;
+  transition: 0.4s;
+  background-color: rgba(0, 0, 0, 1);
+  &:before {
+    display: inline-block;
+    font-size: 4em;
+    height: 0.67px;
+    width: 20px;
+    content: "";
+    background-color: rgba(255, 255, 255, 1);
+    margin-right: 8px;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 0 35rem rgba(213, 175, 148, 1);
+  }
+`;
+
+const BOOKING_LI_MOBILE = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 1);
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 1);
+  padding: 2% 43%;
+  margin: 1%;
+  transition: 0.4s;
+  &:before {
+    display: inline-block;
+    font-size: 4em;
+    height: 0.67px;
+    width: 20px;
+    content: "";
+    background-color: rgba(255, 255, 255, 1);
+    margin-right: 8px;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 0 35rem rgba(213, 175, 148, 1);
+  }
 `;
 
 const LIMobile = styled(Link)`
@@ -149,61 +201,6 @@ const BOOKING_WRAPPER_MOBILE = styled.div`
   justify-content: center;
 `;
 
-const BOOKING = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgba(255, 255, 255, 1);
-  text-transform: uppercase;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 10% 30%;
-  transition: 0.4s;
-  background-color: rgba(0, 0, 0, 1);
-  &:before {
-    display: inline-block;
-    font-size: 4em;
-    height: 0.67px;
-    width: 20px;
-    content: "";
-    background-color: rgba(255, 255, 255, 1);
-    margin-right: 8px;
-  }
-
-  &:hover,
-  &:focus {
-    box-shadow: inset 0 0 0 35rem rgba(213, 175, 148, 1);
-  }
-`;
-
-const BOOKING_MOBILE = styled.a`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgba(255, 255, 255, 1);
-  text-transform: uppercase;
-  font-size: 14px;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 1);
-  padding: 2% 43%;
-  margin: 1%;
-  transition: 0.4s;
-  &:before {
-    display: inline-block;
-    font-size: 4em;
-    height: 0.67px;
-    width: 20px;
-    content: "";
-    background-color: rgba(255, 255, 255, 1);
-    margin-right: 8px;
-  }
-
-  &:hover,
-  &:focus {
-    box-shadow: inset 0 0 0 35rem rgba(213, 175, 148, 1);
-  }
-`;
-
 // eslint-disable-next-line react/prop-types
 const CustomLink = ({ to, children, ...props }) => {
   const resolvedPath = useResolvedPath(to);
@@ -222,9 +219,21 @@ const BookingLink = ({ to, children, ...props }) => {
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
   return (
-    <BookLi className={isActive ? "active" : ""} to={to} {...props}>
+    <BOOKING_LI className={isActive ? "active" : ""} to={to} {...props}>
       {children}
-    </BookLi>
+    </BOOKING_LI>
+  );
+};
+
+// eslint-disable-next-line react/prop-types
+const BookingLinkMobile = ({ to, children, ...props }) => {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+
+  return (
+    <BOOKING_LI_MOBILE className={isActive ? "active" : ""} to={to} {...props}>
+      {children}
+    </BOOKING_LI_MOBILE>
   );
 };
 
@@ -285,9 +294,7 @@ const NavigationComponent = ({ isMobile }) => {
             <CustomLink to="/contact">CONTACT US</CustomLink>
           </NAV>
           <BOOKING_WRAPPER className="booking-wrapper">
-            <BOOKING>
-              <BookingLink to="/book">Booking</BookingLink>
-            </BOOKING>
+            <BookingLink to="/book">Booking</BookingLink>
           </BOOKING_WRAPPER>
         </WRAPPER>
       ) : (
@@ -314,9 +321,7 @@ const NavigationComponent = ({ isMobile }) => {
                 <CustomMobileLink to="/contact">CONTACT US</CustomMobileLink>
               </NAV_MOBILE>
               <BOOKING_WRAPPER_MOBILE className="booking-wrapper">
-                <BOOKING_MOBILE>
-                  <BookingLink to="/book">Booking</BookingLink>
-                </BOOKING_MOBILE>
+                <BookingLinkMobile to="/book">Booking</BookingLinkMobile>
               </BOOKING_WRAPPER_MOBILE>
             </NAV_MODAL>
           </WRAPPER>

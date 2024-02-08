@@ -6,6 +6,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import $ from "jquery";
 
+const pink_color = "rgba(213, 175, 148, 1)";
+
 const anchor_link_style = `
   color: rgba(0, 0, 0, 1.0);
   &:visited {color:rgba(0, 0, 0, 1.0);};
@@ -17,9 +19,10 @@ const anchor_link_style = `
 const WRAPPER = styled.section`
   position: fixed;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding-top: 10px;
+  margin-bottom: 3%;
   top: 0px;
   width: 100%;
 `;
@@ -82,9 +85,37 @@ const MENU_ICON = styled(MenuIcon)`
   cursor: pointer;
 `;
 
-const LI = styled.li`
+const LI = styled(Link)`
   list-style-type: none;
   margin-right: 40px;
+  text-decoration: none;
+  color: inherit;
+  font-size: 16px;
+  font-weight: 60px;
+  padding-bottom: 4px;
+  background-image: linear-gradient(to right top, #d5af94, #d5af94, #d5af94, #d5af94, #d5af94);
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  transition:
+    background-size 0.3s,
+    background-position 0s 0.3s,
+    color 0.3s;
+  &.active {
+    color: ${pink_color};
+    background-position: 100% 100%;
+    background-size: 100% 2px;
+  }
+  &:hover {
+    background-position: 100% 100%;
+    background-size: 100% 2px;
+    color: ${pink_color};
+  }
+`;
+
+const BookLi = styled(Link)`
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
 `;
 
 const LIMobile = styled(Link)`
@@ -103,9 +134,11 @@ const LIMobile = styled(Link)`
   }
 `;
 
-const BOOKING = styled.a`
-  ${anchor_link_style}
-  padding-right: 300px;
+const BOOKING_WRAPPER = styled.div`
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  margin-right: 4%;
 `;
 
 const BOOKING_WRAPPER_MOBILE = styled.div`
@@ -114,6 +147,33 @@ const BOOKING_WRAPPER_MOBILE = styled.div`
   padding: 40px 40px;
   display: flex;
   justify-content: center;
+`;
+
+const BOOKING = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 1);
+  text-transform: uppercase;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 10% 30%;
+  transition: 0.4s;
+  background-color: rgba(0, 0, 0, 1);
+  &:before {
+    display: inline-block;
+    font-size: 4em;
+    height: 0.67px;
+    width: 20px;
+    content: "";
+    background-color: rgba(255, 255, 255, 1);
+    margin-right: 8px;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 0 35rem rgba(213, 175, 148, 1);
+  }
 `;
 
 const BOOKING_MOBILE = styled.a`
@@ -150,11 +210,21 @@ const CustomLink = ({ to, children, ...props }) => {
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
   return (
-    <LI className={isActive ? "active" : ""}>
-      <Link to={to} {...props}>
-        {children}
-      </Link>
+    <LI className={isActive ? "active" : ""} to={to} {...props}>
+      {children}
     </LI>
+  );
+};
+
+// eslint-disable-next-line react/prop-types
+const BookingLink = ({ to, children, ...props }) => {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+
+  return (
+    <BookLi className={isActive ? "active" : ""} to={to} {...props}>
+      {children}
+    </BookLi>
   );
 };
 
@@ -214,7 +284,11 @@ const NavigationComponent = ({ isMobile }) => {
             <CustomLink to="/gallery">GALLERY</CustomLink>
             <CustomLink to="/contact">CONTACT US</CustomLink>
           </NAV>
-          <BOOKING>Booking</BOOKING>
+          <BOOKING_WRAPPER className="booking-wrapper">
+            <BOOKING>
+              <BookingLink to="/book">Booking</BookingLink>
+            </BOOKING>
+          </BOOKING_WRAPPER>
         </WRAPPER>
       ) : (
         <>
@@ -240,7 +314,9 @@ const NavigationComponent = ({ isMobile }) => {
                 <CustomMobileLink to="/contact">CONTACT US</CustomMobileLink>
               </NAV_MOBILE>
               <BOOKING_WRAPPER_MOBILE className="booking-wrapper">
-                <BOOKING_MOBILE>Booking</BOOKING_MOBILE>
+                <BOOKING_MOBILE>
+                  <BookingLink to="/book">Booking</BookingLink>
+                </BOOKING_MOBILE>
               </BOOKING_WRAPPER_MOBILE>
             </NAV_MODAL>
           </WRAPPER>

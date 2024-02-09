@@ -249,7 +249,7 @@ const CustomMobileLink = ({ to, children, ...props }) => {
   );
 };
 
-const NavigationComponent = ({ isMobile }) => {
+const NavigationComponent = ({ isMobile, bookingPage, setBookingPage }) => {
   const [color, setColor] = useState(false);
 
   const closeNav = () => {
@@ -278,8 +278,13 @@ const NavigationComponent = ({ isMobile }) => {
   };
   window.addEventListener("scroll", changeNavbarColor);
 
+  const openBookingPage = (state, setState) => {
+    setState(!state);
+  };
+
   return (
     <>
+      {console.log("navigtaionComponent rendered")}
       {!isMobile ? (
         <WRAPPER
           style={{ background: color ? "rgba(255, 255, 255, 1.0)" : "rgba(255, 255, 255, 0.7)" }}>
@@ -294,7 +299,9 @@ const NavigationComponent = ({ isMobile }) => {
             <CustomLink to="/contact">CONTACT US</CustomLink>
           </NAV>
           <BOOKING_WRAPPER className="booking-wrapper">
-            <BookingLink to="/book">Booking</BookingLink>
+            <BookingLink to="/book" onClick={() => openBookingPage(bookingPage, setBookingPage)}>
+              Booking
+            </BookingLink>
           </BOOKING_WRAPPER>
         </WRAPPER>
       ) : (
@@ -332,11 +339,15 @@ const NavigationComponent = ({ isMobile }) => {
 };
 
 NavigationComponent.propTypes = {
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
+  bookingPage: PropTypes.bool,
+  setBookingPage: PropTypes.func
 };
 
 NavigationComponent.defaultProps = {
-  isMobile: false
+  isMobile: false,
+  bookingPage: false,
+  setBookingPage: () => {}
 };
 
 export default NavigationComponent;

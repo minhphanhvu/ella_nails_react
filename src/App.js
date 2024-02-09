@@ -7,6 +7,7 @@ import { BookingComponent } from "components/Book";
 
 function App() {
   const [width, setWidth] = useState(window.innerWidth);
+  const [bookingPage, setBookingPage] = useState(false);
 
   const handleWindowSizeChange = () => {
     setWidth(window.innerWidth);
@@ -25,13 +26,23 @@ function App() {
     <div className="App">
       {console.log("isMobile", isMobile)}
       {console.log("rerender the App.js")}
-      <NavigationComponent isMobile={isMobile} />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="book" element={<BookingComponent />} />
-      </Routes>
+      {bookingPage ? (
+        <BookingComponent />
+      ) : (
+        <>
+          <NavigationComponent
+            isMobile={isMobile}
+            bookingPage={bookingPage}
+            setBookingPage={setBookingPage}
+          />
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="book" element={<BookingComponent />} />
+          </Routes>
+        </>
+      )}
     </div>
   );
 }
